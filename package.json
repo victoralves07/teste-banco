@@ -10,5 +10,18 @@
     "dotenv": "^16.6.1",
     "express": "^4.22.3",
     "mysql2": "^3.24.6"
-  }
+  },
+  "description": "",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victoralves07/teste-banco.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/victoralves07/teste-banco/issues"
+  },
+  "homepage": "https://github.com/victoralves07/teste-banco#readme"
 }

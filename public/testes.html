@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testes KeepiMov</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f4f8;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        input, select, textarea, button {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #0053A0;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        textarea {
+            height: 130px;
+        }
+
+        pre {
+            background: #202b38;
+            color: #d9edff;
+            padding: 15px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>KeepiMov - Painel de testes</h1>
+
+    <p>Utilize esta tela para testar as requisições da API.</p>
+
+    <label>Método:</label>
+
+    <select id="metodo">
+        <option>GET</option>
+        <option>POST</option>
+        <option>PUT</option>
+        <option>DELETE</option>
+    </select>
+
+    <label>Endereço da rota:</label>
+
+    <input
+        type="text"
+        id="rota"
+        value="/api/linhas"
+        placeholder="/api/linhas"
+    >
+
+    <label>Corpo da requisição (JSON):</label>
+
+    <textarea id="corpo" placeholder='{"name_line":"Linha Azul"}'></textarea>
+
+    <button onclick="executarTeste()">Executar teste</button>
+
+    <h2>Resultado:</h2>
+
+    <pre id="resultado">Aguardando requisição...</pre>
+
+</div>
+
+<script>
+
+async function executarTeste() {
+
+    const metodo = document.getElementById('metodo').value;
+    const rota = document.getElementById('rota').value;
+    const corpo = document.getElementById('corpo').value;
+
+    const resultado = document.getElementById('resultado');
+
+    try {
+
+        const configuracao = {
+            method: metodo,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        if (metodo !== 'GET' && metodo !== 'DELETE' && corpo.trim() !== '') {
+            configuracao.body = corpo;
+        }
+
+        const resposta = await fetch(rota, configuracao);
+
+        const dados = await resposta.json();
+
+        resultado.textContent =
+            `Status: ${resposta.status}\n\n` +
+            JSON.stringify(dados, null, 2);
+
+    } catch (erro) {
+
+        resultado.textContent = 'Erro: ' + erro.message;
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
